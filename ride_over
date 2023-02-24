@@ -1,0 +1,8 @@
+event_analyser.py :: It gives the evdf contour (plot only), 1-D parallel and perpendicular cuts through EVDF with respect to the IMF (both plot and ascii data), the pitch angle spectrum for electrons (plot only) and TA (ascii data only) along with time (ascii, UT). make two empty text files here in this folder itself named "time.txt" and "anisotropy.txt". Make another textfile "event_date.txt" and fill the file with event date to run (in the format yyyy mm dd). make sure that the cursor ends exactly on the last digit of the last line in all the text files (otherwise program won't run!!!).run even_analyser.py, the output will be automatically stored to the folder named "event_analyser_output".
+
+event_analyser_withoutplots.py:: gives output in the folder named "event_analyser_output" without plots.
+
+event_analyser_auto.py :: it gives the ascii data sets (no plots) of the 1-D cuts, TA and time.
+it's a loop program to run cumulatively a large number of events on a raw. create a text file named "event_date_number(1,2,3 etc).txt". run the program, it will automatically create output folders and TA and time text files with numbering og the event_date file.
+
+ 

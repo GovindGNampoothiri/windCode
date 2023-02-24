@@ -1,0 +1,43 @@
+cd /home/govind/data/wind/code
+idl
+@./wind_3dp_pros/start_umn_3dp.pro
+
+.compile get_3dp_structs.pro
+
+date='072704'   #mmddyy
+ duration=22
+ tra=['2004-07-27/07:35:00','2004-07-27/23:59:10']
+ trange=time_double(tra)
+memsize=150
+
+load_3dp_data,'04-07-27/07:35:00',duration,Quality=2,MEMSIZE=150
+
+pesa_low_moment_calibrate,DATE=date,TRANGE=trange           
+
+dat1=get_3dp_structs('el',TRANGE=trange)
+ael=dat1.DATA
+add_magf2,ael,'wi_B3(GSE)'
+add_vsw2,ael,'V_sw2'
+add_scpot,ael,'sc_pot_2'
+
+el=ael[0]
+del=convert_vframe(el,/INTERP)
+pd=pad(del,NUM_PA=17L)
+df=distfunc(pd.ENERGY,pd.ANGLES,MASS=pd.MASS,DF=pd.DATA)
+extract_tags, del,df
+dat=el
+dfra=[1e-16,5e-11]
+
+WINDOW,1,RETAIN=2,XSIZE=800,YSIZE=1100
+                                   WINDOW,2,RETAIN=2,XSIZE=800,YSIZE=1100
+
+
+WSET,1 
+WSHOW,1
+cont2d,del,VLIM=2d4,NGRID=30L,GNORM=gnoem,/HEAT_F,MYONEC=dat,DFRA=dfra
+
+
+WSET,2 
+WSHOW,2
+my_padplot_both,pd,UNITS='flux'EBINS=[0L,8L]
+
